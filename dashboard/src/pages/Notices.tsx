@@ -91,13 +91,13 @@ export const Notices = () => {
                         padding: 'var(--spacing-4) var(--spacing-5)'
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: isEditing ? 'var(--spacing-3)' : 'var(--spacing-2)' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
-                                <span className={`badge ${notice.target === 'enterprise' ? 'badge-warning' : 'badge-blue'}`}>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--spacing-3)' }}>
+                                <span className={`badge ${notice.target === 'enterprise' ? 'badge-warning' : 'badge-blue'}`} style={{ marginTop: '2px' }}>
                                     {notice.target === 'enterprise' ? '영세기업' : '전문가'}
                                 </span>
-                                {!isEditing && <h3 style={{ fontSize: '1.125rem', margin: 0 }}>{notice.title}</h3>}
+                                {!isEditing && <h3 style={{ fontSize: '1.125rem', margin: 0, lineHeight: '1.4' }}>{notice.title}</h3>}
                             </div>
-                            <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem', whiteSpace: 'nowrap', marginLeft: 'var(--spacing-4)' }}>{notice.date}</span>
+                            <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem', whiteSpace: 'nowrap', marginLeft: 'var(--spacing-4)', marginTop: '4px' }}>{notice.date}</span>
                         </div>
 
                         {isEditing ? (
@@ -114,15 +114,16 @@ export const Notices = () => {
                                 />
                             </div>
                         ) : (
-                            <div>
+                            <div style={{ paddingLeft: '84px' }}>
                                 <p className="text-secondary" style={{
-                                    lineHeight: '1.5',
-                                    fontSize: '0.9375rem',
+                                    lineHeight: '1.6',
+                                    fontSize: '0.95rem',
                                     display: '-webkit-box',
                                     WebkitLineClamp: 2,
                                     WebkitBoxOrient: 'vertical',
                                     overflow: 'hidden',
-                                    textOverflow: 'ellipsis'
+                                    textOverflow: 'ellipsis',
+                                    marginTop: 'var(--spacing-1)'
                                 }}>{notice.content}</p>
                             </div>
                         )}
