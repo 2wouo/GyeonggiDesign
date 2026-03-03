@@ -29,6 +29,46 @@ const MOCK_STATUS = [
         deliverables: '웹사이트 시안, 로고',
         minutes: { 3: false, 4: false, 5: false }
     },
+    {
+        id: 4,
+        enterpriseName: '그린에코상사',
+        designerName: '정수석',
+        expectedDate: '2026-06-20',
+        deliverables: '친환경 포장재, 브로슈어',
+        minutes: { 3: true, 4: true, 5: true, 6: false }
+    },
+    {
+        id: 5,
+        enterpriseName: '늘품공예',
+        designerName: '오수석',
+        expectedDate: '2026-08-10',
+        deliverables: '제품 촬영, 카탈로그',
+        minutes: { 3: true, 4: false, 5: false, 6: false, 7: false }
+    },
+    {
+        id: 6,
+        enterpriseName: '스타트업 팩토리',
+        designerName: '최대표',
+        expectedDate: '2026-09-30',
+        deliverables: '앱 UI/UX 시안, 홍보영상',
+        minutes: { 3: true, 4: true, 5: true, 6: true, 7: false, 8: false }
+    },
+    {
+        id: 7,
+        enterpriseName: '우리지역농산물',
+        designerName: '이지원',
+        expectedDate: '2026-05-15',
+        deliverables: 'BI 개발, 스티커 라벨',
+        minutes: { 3: true, 4: true, 5: false }
+    },
+    {
+        id: 8,
+        enterpriseName: '케이텍바이오',
+        designerName: '윤팀장',
+        expectedDate: '2026-10-31',
+        deliverables: '기업 홈페이지 리뉴얼, 리플렛',
+        minutes: { 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 10: false }
+    },
 ];
 
 export const Status = () => {
