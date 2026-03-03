@@ -4,7 +4,7 @@ import { ChevronDown, Search, Edit2, Check, Plus, Trash2 } from 'lucide-react';
 const MOCK_FAQ = [
     { id: 1, type: '기업', q: '전문가와의 미팅은 보통 어디서 진행하나요?', a: '기본적으로 화상 미팅을 권장하며, 불가피한 경우 양자 간 협의하여 오프라인으로 진행 가능합니다.' },
     { id: 2, type: '전문가', q: '활동비 지급을 위한 요건은 무엇인가요?', a: '매월 말일까지 월간 보고서를 제출 완료해야 익월 15일 이내 활동비가 지급됩니다.' },
-    { id: 3, type: '공통', q: '결과물 업로드는 어떻게 하나요?', a: '수탁기관에서 별도로 안내드리는 공유 드라이브 링크에 폴더명(기업명_전문가명)을 생성하여 업로드 해주시면 됩니다.' },
+    { id: 3, type: '공통', q: '결과물 업로드는 어떻게 하나요?', a: '원활한 산출물 취합 및 관리를 위해 공공디자인나눔 전용 웹하드(또는 구글 드라이브)를 사용합니다.\n\n1. 지급된 링크로 접속하여 기업명(또는 팀명)으로 된 폴더를 찾습니다.\n2. 폴더 내부에 [1차_산출물], [최종_산출물] 등 단계별 폴더를 생성합니다.\n3. 해당 폴더 안에 파일명 컨벤션(예: 260301_혁신제조_브랜드가이드_v1.pdf)을 준수하여 결과물을 업로드 해주세요.\n\n* 용량이 1GB를 초과하는 대용량 영상/원본 파일의 경우, 별도로 압축 후 분할 업로드하거나 담당자에게 1:1로 전달 부탁드립니다.' },
     { id: 4, type: '기업', q: '디자인 방향성이 중간에 크게 바뀌면 어떻게 하나요?', a: '과업 명세에 최초 합의된 기준을 원칙으로 하며, 부득이한 수정은 수탁기관 및 양자 간 합의 후 공식적으로 수정해야 합니다.' },
     { id: 5, type: '전문가', q: '영세기업과 연락이 두절되면 어떻게 해야 하나요?', a: '3영업일 이상 회신이 없을 경우 수탁기관 담당자에게 즉시 보고해 주시기 바랍니다.' }
 ];
@@ -13,7 +13,7 @@ type TabType = '전체' | '기업' | '전문가' | '공통';
 
 export const Qna = () => {
     const [faqData, setFaqData] = useState(() => {
-        const saved = localStorage.getItem('mockFaq');
+        const saved = localStorage.getItem('mockFaqV2');
         return saved ? JSON.parse(saved) : MOCK_FAQ;
     });
     const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +26,7 @@ export const Qna = () => {
     };
 
     useEffect(() => {
-        localStorage.setItem('mockFaq', JSON.stringify(faqData));
+        localStorage.setItem('mockFaqV2', JSON.stringify(faqData));
     }, [faqData]);
 
     const filteredFaq = useMemo(() => {
@@ -152,8 +152,11 @@ export const Qna = () => {
                                         />
                                     </div>
                                     {openId === faq.id && (
-                                        <div style={{ marginTop: 'var(--spacing-4)', paddingTop: 'var(--spacing-4)', borderTop: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
-                                            A. {faq.a}
+                                        <div style={{ marginTop: 'var(--spacing-4)', paddingTop: 'var(--spacing-4)', borderTop: '1px solid var(--border-color)', color: 'var(--text-secondary)', display: 'flex', gap: '8px' }}>
+                                            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>A.</span>
+                                            <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
+                                                {faq.a}
+                                            </div>
                                         </div>
                                     )}
                                 </>
