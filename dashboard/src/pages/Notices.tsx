@@ -88,7 +88,7 @@ export const Notices = () => {
                 {filteredNotices.map((notice: any) => (
                     <div key={notice.id} className="card" style={{
                         borderLeft: `3px solid ${notice.target === 'enterprise' ? 'var(--status-warning)' : 'var(--point-primary)'}`,
-                        padding: 'var(--spacing-4) var(--spacing-5)'
+                        padding: 'var(--spacing-6)'
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-3)' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-3)' }}>
