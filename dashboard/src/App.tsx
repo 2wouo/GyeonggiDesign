@@ -95,7 +95,9 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
         {/* Main Content Area */}
         <main style={{ flexGrow: 1, minWidth: 0, paddingBottom: 'var(--spacing-12)' }}>
-          {children}
+          <div className="container" style={{ paddingTop: 'var(--spacing-8)' }}>
+            {children}
+          </div>
         </main>
       </div>
     </div>
