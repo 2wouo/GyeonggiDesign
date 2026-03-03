@@ -5,6 +5,9 @@ export const Contact = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [formData, setFormData] = useState({
         type: '디자인 지원', // default option
+        companyName: '',
+        contactName: '',
+        phoneNumber: '',
         title: '',
         content: '',
         email: ''
@@ -23,7 +26,7 @@ export const Contact = () => {
             setIsSubmitted(true);
             setTimeout(() => {
                 setIsSubmitted(false);
-                setFormData({ type: '디자인 지원', title: '', content: '', email: '' });
+                setFormData({ type: '디자인 지원', companyName: '', contactName: '', phoneNumber: '', title: '', content: '', email: '' });
             }, 3000); // Reset after 3 seconds
         }, 500);
     };
@@ -92,25 +95,94 @@ export const Contact = () => {
                             </div>
                         </div>
 
-                        {/* Contact Email */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
-                            <label style={{ fontWeight: 600 }}>답변 받을 이메일 <span style={{ color: 'var(--status-danger)' }}>*</span></label>
-                            <input
-                                type="email"
-                                name="email"
-                                required
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="example@domain.com"
-                                style={{
-                                    padding: '12px 16px',
-                                    borderRadius: '8px',
-                                    border: '1px solid var(--border-color)',
-                                    background: 'var(--bg-secondary)',
-                                    color: 'var(--text-primary)',
-                                    fontSize: '1rem'
-                                }}
-                            />
+                        {/* Company Info row */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 'var(--spacing-6)' }}>
+                            {/* Company Name */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
+                                <label style={{ fontWeight: 600 }}>기업명 <span style={{ color: 'var(--status-danger)' }}>*</span></label>
+                                <input
+                                    type="text"
+                                    name="companyName"
+                                    required
+                                    value={formData.companyName}
+                                    onChange={handleChange}
+                                    placeholder="기업명을 입력해주세요"
+                                    style={{
+                                        padding: '12px 16px',
+                                        borderRadius: '8px',
+                                        border: '1px solid var(--border-color)',
+                                        background: 'var(--bg-secondary)',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '1rem'
+                                    }}
+                                />
+                            </div>
+
+                            {/* Contact Name */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
+                                <label style={{ fontWeight: 600 }}>담당자명 <span style={{ color: 'var(--status-danger)' }}>*</span></label>
+                                <input
+                                    type="text"
+                                    name="contactName"
+                                    required
+                                    value={formData.contactName}
+                                    onChange={handleChange}
+                                    placeholder="담당자 성함을 입력해주세요"
+                                    style={{
+                                        padding: '12px 16px',
+                                        borderRadius: '8px',
+                                        border: '1px solid var(--border-color)',
+                                        background: 'var(--bg-secondary)',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '1rem'
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Contact Info row */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 'var(--spacing-6)' }}>
+                            {/* Phone Number */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
+                                <label style={{ fontWeight: 600 }}>연락처 <span style={{ color: 'var(--status-danger)' }}>*</span></label>
+                                <input
+                                    type="tel"
+                                    name="phoneNumber"
+                                    required
+                                    value={formData.phoneNumber}
+                                    onChange={handleChange}
+                                    placeholder="010-0000-0000"
+                                    style={{
+                                        padding: '12px 16px',
+                                        borderRadius: '8px',
+                                        border: '1px solid var(--border-color)',
+                                        background: 'var(--bg-secondary)',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '1rem'
+                                    }}
+                                />
+                            </div>
+
+                            {/* Contact Email */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
+                                <label style={{ fontWeight: 600 }}>답변 받을 이메일 <span style={{ color: 'var(--status-danger)' }}>*</span></label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="example@domain.com"
+                                    style={{
+                                        padding: '12px 16px',
+                                        borderRadius: '8px',
+                                        border: '1px solid var(--border-color)',
+                                        background: 'var(--bg-secondary)',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '1rem'
+                                    }}
+                                />
+                            </div>
                         </div>
 
                         {/* Title */}
