@@ -10,80 +10,53 @@ export const Process = () => {
             </div>
 
             <div className="card" style={{ padding: 'var(--spacing-8)' }}>
-                {/* CSS Double Diamond Graphic */}
+                {/* SVG Double Diamond Graphic */}
                 <div style={{
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
                     marginBottom: 'var(--spacing-12)',
-                    position: 'relative',
-                    height: '200px'
+                    width: '100%'
                 }}>
-                    {/* First Diamond */}
-                    <div style={{
-                        position: 'absolute',
-                        left: '25%',
-                        transform: 'translateX(-50%)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center'
-                    }}>
-                        <div style={{
-                            width: '120px',
-                            height: '120px',
-                            border: '2px solid var(--point-primary)',
-                            transform: 'rotate(45deg)',
-                            background: 'rgba(37, 99, 235, 0.05)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: 'var(--glow-primary)'
-                        }}>
-                        </div>
-                        <span style={{ marginTop: '30px', fontWeight: 700, fontSize: '1.1rem', color: 'var(--point-primary)' }}>문제 파악</span>
-                    </div>
+                    <svg viewBox="0 0 800 240" style={{ width: '100%', maxWidth: '800px', height: 'auto', overflow: 'visible' }}>
+                        <defs>
+                            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="transparent" />
+                                <stop offset="15%" stopColor="rgba(255,255,255,0.3)" />
+                                <stop offset="85%" stopColor="rgba(255,255,255,0.3)" />
+                                <stop offset="100%" stopColor="transparent" />
+                            </linearGradient>
+                        </defs>
+                        {/* Background Line */}
+                        <rect x="0" y="119" width="800" height="2" fill="url(#lineGrad)" />
 
-                    {/* Second Diamond */}
-                    <div style={{
-                        position: 'absolute',
-                        right: '25%',
-                        transform: 'translateX(50%)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center'
-                    }}>
-                        <div style={{
-                            width: '120px',
-                            height: '120px',
-                            border: '2px solid var(--point-secondary)',
-                            transform: 'rotate(45deg)',
-                            background: 'rgba(151, 37, 235, 0.05)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: 'var(--glow-secondary)'
-                        }}>
-                        </div>
-                        <span style={{ marginTop: '30px', fontWeight: 700, fontSize: '1.1rem', color: 'var(--point-secondary)' }}>해결책 도출</span>
-                    </div>
+                        {/* First Diamond */}
+                        <path d="M 280 20 L 400 120 L 280 220 L 160 120 Z"
+                            fill="rgba(37, 99, 235, 0.05)"
+                            stroke="#2563eb"
+                            strokeWidth="2" />
 
-                    {/* Center Point */}
-                    <div style={{
-                        width: '12px',
-                        height: '12px',
-                        borderRadius: '50%',
-                        background: 'var(--text-primary)',
-                        zIndex: 10
-                    }}></div>
+                        <text x="220" y="115" fill="#2563eb" fontWeight="800" fontSize="18" textAnchor="middle">이해/발견</text>
+                        <text x="220" y="138" fill="var(--text-secondary)" fontSize="14" textAnchor="middle">Discover</text>
 
-                    {/* Connecting Line */}
-                    <div style={{
-                        position: 'absolute',
-                        width: '80%',
-                        height: '2px',
-                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.2) 80%, transparent)',
-                        zIndex: 0
-                    }}></div>
+                        <text x="340" y="115" fill="#2563eb" fontWeight="800" fontSize="18" textAnchor="middle">정의</text>
+                        <text x="340" y="138" fill="var(--text-secondary)" fontSize="14" textAnchor="middle">Define</text>
+
+                        {/* Second Diamond */}
+                        <path d="M 520 20 L 640 120 L 520 220 L 400 120 Z"
+                            fill="rgba(151, 37, 235, 0.05)"
+                            stroke="#9725eb"
+                            strokeWidth="2" />
+
+                        <text x="460" y="115" fill="#9725eb" fontWeight="800" fontSize="18" textAnchor="middle">개발</text>
+                        <text x="460" y="138" fill="var(--text-secondary)" fontSize="14" textAnchor="middle">Develop</text>
+
+                        <text x="580" y="115" fill="#9725eb" fontWeight="800" fontSize="18" textAnchor="middle">전달</text>
+                        <text x="580" y="138" fill="var(--text-secondary)" fontSize="14" textAnchor="middle">Deliver</text>
+
+                        {/* Center Node */}
+                        <circle cx="400" cy="120" r="6" fill="var(--bg-secondary)" stroke="#4b5563" strokeWidth="3" />
+                    </svg>
                 </div>
 
                 {/* Process Steps */}
