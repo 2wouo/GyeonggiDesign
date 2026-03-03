@@ -101,51 +101,78 @@ export const Schedule = () => {
                     ))}
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '8px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '12px' }}>
                     {calendarDays.map((date, idx) => {
                         const events = getEventsForDate(date);
                         const isToday = date && date.toDateString() === new Date().toDateString();
                         const isSunday = date && date.getDay() === 0;
                         const isSaturday = date && date.getDay() === 6;
+                        const hasEvents = events.length > 0;
 
                         return (
                             <div key={idx} style={{
-                                minHeight: '80px',
+                                minHeight: '100px',
                                 padding: '8px',
-                                backgroundColor: date ? 'var(--bg-secondary)' : 'transparent',
-                                borderRadius: 'var(--radius-sm)',
-                                border: date ? (isToday ? '1px solid var(--point-primary)' : '1px solid var(--border-color)') : 'none',
-                                opacity: date ? 1 : 0
-                            }}>
+                                backgroundColor: date && hasEvents ? 'rgba(255, 255, 255, 0.02)' : 'transparent',
+                                borderRadius: 'var(--radius-md)',
+                                border: '1px solid transparent',
+                                opacity: date ? 1 : 0,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                transition: 'background-color 0.2s ease',
+                                cursor: date ? 'pointer' : 'default',
+                            }}
+                                onMouseEnter={(e) => {
+                                    if (date) e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    if (date) e.currentTarget.style.backgroundColor = hasEvents ? 'rgba(255, 255, 255, 0.02)' : 'transparent';
+                                }}
+                            >
                                 {date && (
                                     <>
                                         <div style={{
-                                            textAlign: 'right',
-                                            fontSize: '0.875rem',
-                                            marginBottom: '4px',
-                                            fontWeight: isToday ? 700 : 400,
-                                            color: isToday ? 'var(--point-primary)' : isSunday ? 'var(--status-danger)' : isSaturday ? 'var(--point-primary)' : 'var(--text-primary)'
+                                            alignSelf: 'flex-end',
+                                            width: '28px',
+                                            height: '28px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '0.9rem',
+                                            marginBottom: '8px',
+                                            fontWeight: isToday ? 700 : 500,
+                                            color: isToday ? '#ffffff' : isSunday ? 'var(--status-danger)' : isSaturday ? 'var(--point-primary)' : 'var(--text-secondary)',
+                                            backgroundColor: isToday ? 'var(--point-primary)' : 'transparent',
+                                            borderRadius: '50%',
+                                            boxShadow: isToday ? '0 0 12px rgba(37, 99, 235, 0.4)' : 'none'
                                         }}>
                                             {date.getDate()}
                                         </div>
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', flexGrow: 1 }}>
                                             {events.map((e: any) => (
                                                 <div
                                                     key={e.id}
                                                     style={{
-                                                        fontSize: '0.7rem',
-                                                        padding: '4px',
-                                                        backgroundColor: e.type === '워크숍' ? 'rgba(37, 99, 235, 0.2)' : 'rgba(245, 158, 11, 0.2)',
-                                                        color: e.type === '워크숍' ? '#93c5fd' : '#fcd34d',
-                                                        borderRadius: '4px',
+                                                        fontSize: '0.75rem',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '6px',
+                                                        color: 'var(--text-primary)',
                                                         whiteSpace: 'nowrap',
                                                         overflow: 'hidden',
                                                         textOverflow: 'ellipsis',
-                                                        borderLeft: `2px solid ${e.type === '워크숍' ? 'var(--point-primary)' : 'var(--status-warning)'}`
+                                                        background: 'transparent'
                                                     }}
                                                     title={e.title}
                                                 >
-                                                    {e.title}
+                                                    <span style={{
+                                                        width: '6px',
+                                                        height: '6px',
+                                                        borderRadius: '50%',
+                                                        backgroundColor: e.type === '워크숍' ? 'var(--point-primary)' : 'var(--status-warning)',
+                                                        flexShrink: 0
+                                                    }} />
+                                                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{e.title}</span>
                                                 </div>
                                             ))}
                                         </div>
