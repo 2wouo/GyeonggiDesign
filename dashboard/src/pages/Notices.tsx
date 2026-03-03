@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Edit2, Check, ChevronRight } from 'lucide-react';
 
 const INITIAL_NOTICES = [
@@ -19,14 +19,21 @@ const INITIAL_NOTICES = [
 ];
 
 export const Notices = () => {
-    const [notices, setNotices] = useState(INITIAL_NOTICES);
+    const [notices, setNotices] = useState(() => {
+        const saved = localStorage.getItem('mockNotices');
+        return saved ? JSON.parse(saved) : INITIAL_NOTICES;
+    });
     const [isEditing, setIsEditing] = useState(false);
     const [activeTab, setActiveTab] = useState<'all' | 'enterprise' | 'expert'>('all');
 
-    const filteredNotices = notices.filter(n => activeTab === 'all' || n.target === activeTab);
+    const filteredNotices = notices.filter((n: any) => activeTab === 'all' || n.target === activeTab);
+
+    useEffect(() => {
+        localStorage.setItem('mockNotices', JSON.stringify(notices));
+    }, [notices]);
 
     const handleNoticeChange = (id: number, field: string, value: string) => {
-        setNotices(prev => prev.map(n => n.id === id ? { ...n, [field]: value } : n));
+        setNotices((prev: any[]) => prev.map((n: any) => n.id === id ? { ...n, [field]: value } : n));
     };
 
     return (
@@ -78,7 +85,7 @@ export const Notices = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
                 {filteredNotices.length === 0 && <div className="card text-center text-muted" style={{ padding: 'var(--spacing-8)' }}>해당하는 공지사항이 없습니다.</div>}
 
-                {filteredNotices.map(notice => (
+                {filteredNotices.map((notice: any) => (
                     <div key={notice.id} className="card" style={{
                         borderLeft: `4px solid ${notice.target === 'enterprise' ? 'var(--status-warning)' : 'var(--point-primary)'}`,
                         padding: 'var(--spacing-6)'

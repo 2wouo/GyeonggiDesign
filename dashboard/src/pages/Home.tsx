@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Clock, CheckCircle2, ChevronRight, AlertCircle, Edit2, Check, Plus, Trash2 } from 'lucide-react';
 
 const INITIAL_ROADMAP = [
@@ -11,25 +11,39 @@ const INITIAL_ROADMAP = [
 
 export const Home = () => {
     // Local state for MVP
-    const [roadmap, setRoadmap] = useState(INITIAL_ROADMAP);
+    const [roadmap, setRoadmap] = useState(() => {
+        const saved = localStorage.getItem('mockRoadmap');
+        return saved ? JSON.parse(saved) : INITIAL_ROADMAP;
+    });
     const [isEditingMap, setIsEditingMap] = useState(false);
 
-    const [notices, setNotices] = useState({
-        enterprise: "전문가와의 매칭 후, 첫 미팅 전까지 '기업 현황 조사서'를 작성하여 지정된 드라이브에 업로드해 주시기 바랍니다.",
-        expert: "매월 말일까지 담당 기업과의 진행 상황을 요약한 '월간 보고서'를 수탁기관으로 제출해야 활동비가 정상 지급됩니다."
+    const [notices, setNotices] = useState(() => {
+        const saved = localStorage.getItem('mockHomeNotices');
+        return saved ? JSON.parse(saved) : {
+            enterprise: "전문가와의 매칭 후, 첫 미팅 전까지 '기업 현황 조사서'를 작성하여 지정된 드라이브에 업로드해 주시기 바랍니다.",
+            expert: "매월 말일까지 담당 기업과의 진행 상황을 요약한 '월간 보고서'를 수탁기관으로 제출해야 활동비가 정상 지급됩니다."
+        };
     });
     const [isEditingNotices, setIsEditingNotices] = useState(false);
 
+    useEffect(() => {
+        localStorage.setItem('mockRoadmap', JSON.stringify(roadmap));
+    }, [roadmap]);
+
+    useEffect(() => {
+        localStorage.setItem('mockHomeNotices', JSON.stringify(notices));
+    }, [notices]);
+
     // Map Handlers
     const handleMapChange = (id: number, field: string, value: string) => {
-        setRoadmap(prev => prev.map(item => item.id === id ? { ...item, [field]: value } : item));
+        setRoadmap((prev: any[]) => prev.map((item: any) => item.id === id ? { ...item, [field]: value } : item));
     };
     const addMapStep = () => {
-        const newId = roadmap.length > 0 ? Math.max(...roadmap.map(r => r.id)) + 1 : 1;
+        const newId = roadmap.length > 0 ? Math.max(...roadmap.map((r: any) => r.id)) + 1 : 1;
         setRoadmap([...roadmap, { id: newId, phase: `${newId}단계`, title: '새로운 단계', status: 'pending', date: '미정' }]);
     };
     const removeMapStep = (id: number) => {
-        setRoadmap(prev => prev.filter(item => item.id !== id));
+        setRoadmap((prev: any[]) => prev.filter((item: any) => item.id !== id));
     };
 
     return (
@@ -54,7 +68,7 @@ export const Home = () => {
                 <div className="card">
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
                         {roadmap.length === 0 && <p className="text-muted text-center" style={{ padding: 'var(--spacing-4)' }}>목록이 비어있습니다.</p>}
-                        {roadmap.map((step, idx) => (
+                        {roadmap.map((step: any, idx: number) => (
                             <div key={step.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--spacing-4)' }}>
                                 {/* Status Icon */}
                                 <div style={{
@@ -133,7 +147,7 @@ export const Home = () => {
                         {isEditingNotices ? (
                             <textarea
                                 value={notices.enterprise}
-                                onChange={(e) => setNotices(prev => ({ ...prev, enterprise: e.target.value }))}
+                                onChange={(e) => setNotices((prev: any) => ({ ...prev, enterprise: e.target.value }))}
                                 style={{ width: '100%', minHeight: '120px', padding: '12px', borderRadius: '6px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', resize: 'vertical' }}
                             />
                         ) : (
@@ -150,7 +164,7 @@ export const Home = () => {
                         {isEditingNotices ? (
                             <textarea
                                 value={notices.expert}
-                                onChange={(e) => setNotices(prev => ({ ...prev, expert: e.target.value }))}
+                                onChange={(e) => setNotices((prev: any) => ({ ...prev, expert: e.target.value }))}
                                 style={{ width: '100%', minHeight: '120px', padding: '12px', borderRadius: '6px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', resize: 'vertical' }}
                             />
                         ) : (
