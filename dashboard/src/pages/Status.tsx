@@ -73,14 +73,14 @@ const MOCK_STATUS = [
 
 export const Status = () => {
     const [statusList, setStatusList] = useState(() => {
-        const saved = localStorage.getItem('mockStatusAdvanced');
+        const saved = localStorage.getItem('mockStatusAdvancedV2');
         return saved ? JSON.parse(saved) : MOCK_STATUS;
     });
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        localStorage.setItem('mockStatusAdvanced', JSON.stringify(statusList));
+        localStorage.setItem('mockStatusAdvancedV2', JSON.stringify(statusList));
     }, [statusList]);
 
     const handleStatusChange = (id: number, field: string, value: any) => {
