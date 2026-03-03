@@ -90,14 +90,13 @@ export const Notices = () => {
                         borderLeft: `3px solid ${notice.target === 'enterprise' ? 'var(--status-warning)' : 'var(--point-primary)'}`,
                         padding: 'var(--spacing-4) var(--spacing-5)'
                     }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: isEditing ? 'var(--spacing-3)' : 'var(--spacing-2)' }}>
-                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--spacing-3)' }}>
-                                <span className={`badge ${notice.target === 'enterprise' ? 'badge-warning' : 'badge-blue'}`} style={{ marginTop: '2px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-3)' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-3)' }}>
+                                <span className={`badge ${notice.target === 'enterprise' ? 'badge-warning' : 'badge-blue'}`}>
                                     {notice.target === 'enterprise' ? '영세기업' : '전문가'}
                                 </span>
-                                {!isEditing && <h3 style={{ fontSize: '1.125rem', margin: 0, lineHeight: '1.4' }}>{notice.title}</h3>}
+                                <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>{notice.date}</span>
                             </div>
-                            <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem', whiteSpace: 'nowrap', marginLeft: 'var(--spacing-4)', marginTop: '4px' }}>{notice.date}</span>
                         </div>
 
                         {isEditing ? (
@@ -114,7 +113,8 @@ export const Notices = () => {
                                 />
                             </div>
                         ) : (
-                            <div style={{ paddingLeft: '84px' }}>
+                            <div>
+                                <h3 style={{ fontSize: '1.125rem', margin: '0 0 var(--spacing-2) 0', lineHeight: '1.4' }}>{notice.title}</h3>
                                 <p className="text-secondary" style={{
                                     lineHeight: '1.6',
                                     fontSize: '0.95rem',
@@ -122,8 +122,7 @@ export const Notices = () => {
                                     WebkitLineClamp: 2,
                                     WebkitBoxOrient: 'vertical',
                                     overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                    marginTop: 'var(--spacing-1)'
+                                    textOverflow: 'ellipsis'
                                 }}>{notice.content}</p>
                             </div>
                         )}
