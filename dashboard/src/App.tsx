@@ -1,5 +1,5 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Home as HomeIcon, Calendar as CalendarIcon, MessageSquare, ShieldAlert, Bell, ClipboardList, GitMerge } from 'lucide-react';
+import { Home as HomeIcon, Calendar as CalendarIcon, MessageSquare, ShieldAlert, Bell, ClipboardList, Mail } from 'lucide-react';
 import './App.css';
 
 import { Home } from './pages/Home';
@@ -7,6 +7,7 @@ import { Schedule } from './pages/Schedule';
 import { Notices } from './pages/Notices';
 import { Status } from './pages/Status';
 import { Qna } from './pages/Qna';
+import { Contact } from './pages/Contact';
 import { Admin } from './pages/Admin';
 
 // Main Layout Component
@@ -19,6 +20,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     { path: '/status', label: '영세기업 현황', icon: <ClipboardList size={20} /> },
     { path: '/schedule', label: '주요 일정', icon: <CalendarIcon size={20} /> },
     { path: '/qna', label: '자주 묻는 질문', icon: <MessageSquare size={20} /> },
+    { path: '/contact', label: '문의하기', icon: <Mail size={20} /> },
     { path: '/admin', label: '관리자 페이지', icon: <ShieldAlert size={20} /> },
   ];
 
@@ -115,6 +117,7 @@ function App() {
         <Route path="/status" element={<Status />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/qna" element={<Qna />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </AppLayout>
