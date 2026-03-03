@@ -87,10 +87,10 @@ export const Notices = () => {
 
                 {filteredNotices.map((notice: any) => (
                     <div key={notice.id} className="card" style={{
-                        borderLeft: `4px solid ${notice.target === 'enterprise' ? 'var(--status-warning)' : 'var(--point-primary)'}`,
-                        padding: 'var(--spacing-6)'
+                        borderLeft: `3px solid ${notice.target === 'enterprise' ? 'var(--status-warning)' : 'var(--point-primary)'}`,
+                        padding: 'var(--spacing-4) var(--spacing-5)'
                     }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-3)', marginBottom: 'var(--spacing-4)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)', marginBottom: 'var(--spacing-3)' }}>
                             <span className={`badge ${notice.target === 'enterprise' ? 'badge-warning' : 'badge-blue'}`}>
                                 {notice.target === 'enterprise' ? '영세기업' : '전문가'}
                             </span>
@@ -112,15 +112,15 @@ export const Notices = () => {
                             </div>
                         ) : (
                             <div>
-                                <h3 style={{ fontSize: '1.25rem', marginBottom: 'var(--spacing-3)' }}>{notice.title}</h3>
-                                <p className="text-secondary" style={{ lineHeight: '1.6' }}>{notice.content}</p>
+                                <h3 style={{ fontSize: '1.125rem', marginBottom: 'var(--spacing-2)' }}>{notice.title}</h3>
+                                <p className="text-secondary" style={{ lineHeight: '1.5', fontSize: '0.9375rem' }}>{notice.content}</p>
                             </div>
                         )}
 
                         {!isEditing && (
-                            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--spacing-4)' }}>
-                                <button className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 12px', fontSize: '0.875rem' }}>
-                                    상세 보기 <ChevronRight size={16} />
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--spacing-3)' }}>
+                                <button className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '4px 10px', fontSize: '0.8125rem' }}>
+                                    상세 보기 <ChevronRight size={14} />
                                 </button>
                             </div>
                         )}

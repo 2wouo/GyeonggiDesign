@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, CheckCircle2, ChevronRight, AlertCircle, Edit2, Check, Plus, Trash2 } from 'lucide-react';
+import { Clock, CheckCircle2, Edit2, Check, Plus, Trash2 } from 'lucide-react';
 
 const INITIAL_ROADMAP = [
     { id: 1, phase: '1단계', title: '기업 매칭 및 현황 진단', status: 'completed', date: '3월 1주차' },
@@ -17,22 +17,9 @@ export const Home = () => {
     });
     const [isEditingMap, setIsEditingMap] = useState(false);
 
-    const [notices, setNotices] = useState(() => {
-        const saved = localStorage.getItem('mockHomeNotices');
-        return saved ? JSON.parse(saved) : {
-            enterprise: "전문가와의 매칭 후, 첫 미팅 전까지 '기업 현황 조사서'를 작성하여 지정된 드라이브에 업로드해 주시기 바랍니다.",
-            expert: "매월 말일까지 담당 기업과의 진행 상황을 요약한 '월간 보고서'를 수탁기관으로 제출해야 활동비가 정상 지급됩니다."
-        };
-    });
-    const [isEditingNotices, setIsEditingNotices] = useState(false);
-
     useEffect(() => {
         localStorage.setItem('mockRoadmap', JSON.stringify(roadmap));
     }, [roadmap]);
-
-    useEffect(() => {
-        localStorage.setItem('mockHomeNotices', JSON.stringify(notices));
-    }, [notices]);
 
     // Map Handlers
     const handleMapChange = (id: number, field: string, value: string) => {
@@ -125,56 +112,6 @@ export const Home = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Notices Section */}
-            <div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 'var(--spacing-2)' }}>
-                    <button
-                        className={`btn ${isEditingNotices ? 'btn-primary' : 'btn-secondary'}`}
-                        onClick={() => setIsEditingNotices(!isEditingNotices)}
-                        style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 12px', fontSize: '0.875rem' }}
-                    >
-                        {isEditingNotices ? <><Check size={14} /> 저장</> : <><Edit2 size={14} /> 공지 내용 편집</>}
-                    </button>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-6)' }}>
-                    <div className="card" style={{ borderLeft: '4px solid var(--status-warning)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)', marginBottom: 'var(--spacing-3)' }}>
-                            <AlertCircle size={20} className="text-primary" />
-                            <h4 style={{ fontSize: '1.125rem' }}>영세기업 필독란</h4>
-                        </div>
-                        {isEditingNotices ? (
-                            <textarea
-                                value={notices.enterprise}
-                                onChange={(e) => setNotices((prev: any) => ({ ...prev, enterprise: e.target.value }))}
-                                style={{ width: '100%', minHeight: '120px', padding: '12px', borderRadius: '6px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', resize: 'vertical' }}
-                            />
-                        ) : (
-                            <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>{notices.enterprise}</p>
-                        )}
-                        {!isEditingNotices && <button className="btn btn-secondary" style={{ marginTop: 'var(--spacing-4)', width: '100%' }}>자세히 보기 <ChevronRight size={16} /></button>}
-                    </div>
-
-                    <div className="card" style={{ borderLeft: '4px solid var(--point-primary)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)', marginBottom: 'var(--spacing-3)' }}>
-                            <AlertCircle size={20} className="text-primary" />
-                            <h4 style={{ fontSize: '1.125rem' }}>디자인 전문가 필독란</h4>
-                        </div>
-                        {isEditingNotices ? (
-                            <textarea
-                                value={notices.expert}
-                                onChange={(e) => setNotices((prev: any) => ({ ...prev, expert: e.target.value }))}
-                                style={{ width: '100%', minHeight: '120px', padding: '12px', borderRadius: '6px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', resize: 'vertical' }}
-                            />
-                        ) : (
-                            <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>{notices.expert}</p>
-                        )}
-                        {!isEditingNotices && <button className="btn btn-secondary" style={{ marginTop: 'var(--spacing-4)', width: '100%' }}>자세히 보기 <ChevronRight size={16} /></button>}
-                    </div>
-                </div>
-            </div>
-
         </div>
     );
 };
