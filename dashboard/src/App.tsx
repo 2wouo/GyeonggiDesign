@@ -1,10 +1,11 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Home as HomeIcon, Calendar as CalendarIcon, MessageSquare, ShieldAlert, Bell } from 'lucide-react';
+import { Home as HomeIcon, Calendar as CalendarIcon, MessageSquare, ShieldAlert, Bell, ClipboardList } from 'lucide-react';
 import './App.css';
 
 import { Home } from './pages/Home';
 import { Schedule } from './pages/Schedule';
 import { Notices } from './pages/Notices';
+import { Status } from './pages/Status';
 import { Qna } from './pages/Qna';
 import { Admin } from './pages/Admin';
 
@@ -15,6 +16,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const navItems = [
     { path: '/', label: '홈 (프로세스 맵)', icon: <HomeIcon size={20} /> },
     { path: '/notices', label: '공지사항', icon: <Bell size={20} /> },
+    { path: '/status', label: '영세기업 현황', icon: <ClipboardList size={20} /> },
     { path: '/schedule', label: '주요 일정', icon: <CalendarIcon size={20} /> },
     { path: '/qna', label: '자주 묻는 질문', icon: <MessageSquare size={20} /> },
     { path: '/admin', label: '관리자 페이지', icon: <ShieldAlert size={20} /> },
@@ -110,6 +112,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/notices" element={<Notices />} />
+        <Route path="/status" element={<Status />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/qna" element={<Qna />} />
         <Route path="/admin" element={<Admin />} />
