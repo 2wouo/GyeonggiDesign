@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { CalendarPlus, MapPin, Edit2, Check, Plus, Trash2 } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
+import { CalendarPlus, MapPin, Edit2, Check, Plus, Trash2, ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
 
 const MOCK_SCHEDULE = [
     { id: 1, title: '디자인 방향성 수립 대면 워크숍', date: '2026. 03. 14 (수) 14:00', location: '수원 컨벤션센터 3홀', type: '워크숍' },
@@ -31,6 +31,37 @@ export const Schedule = () => {
         setSchedule((prev: any[]) => prev.filter((s: any) => s.id !== id));
     };
 
+    // Calendar Logic
+    const [currentMonth, setCurrentMonth] = useState(new Date(2026, 2, 1)); // Default to March 2026 based on mock data
+
+    const prevMonth = () => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+    const nextMonth = () => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+
+    const calendarDays = useMemo(() => {
+        const year = currentMonth.getFullYear();
+        const month = currentMonth.getMonth();
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        const days = [];
+        for (let i = 0; i < firstDay; i++) days.push(null);
+        for (let i = 1; i <= daysInMonth; i++) days.push(new Date(year, month, i));
+
+        // Add trailing nulls to complete the grid (optional, but keeps rows consistent)
+        const totalCells = Math.ceil(days.length / 7) * 7;
+        while (days.length < totalCells) days.push(null);
+
+        return days;
+    }, [currentMonth]);
+
+    const getEventsForDate = (date: Date | null) => {
+        if (!date) return [];
+        const dateString = `${date.getFullYear()}. ${String(date.getMonth() + 1).padStart(2, '0')}. ${String(date.getDate()).padStart(2, '0')}`;
+        return schedule.filter((s: any) => s.date.includes(dateString));
+    };
+
+    const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-8)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
@@ -45,6 +76,85 @@ export const Schedule = () => {
                 >
                     {isEditing ? <><Check size={16} /> 편집 완료</> : <><Edit2 size={16} /> 일정 편집</>}
                 </button>
+            </div>
+
+            {/* Calendar View */}
+            <div className="card" style={{ padding: 'var(--spacing-6)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-6)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-3)' }}>
+                        <CalendarIcon className="text-primary" size={24} />
+                        <h3 style={{ fontSize: '1.25rem', margin: 0 }}>
+                            {currentMonth.getFullYear()}년 {currentMonth.getMonth() + 1}월
+                        </h3>
+                    </div>
+                    <div style={{ display: 'flex', gap: 'var(--spacing-2)' }}>
+                        <button className="btn btn-secondary" onClick={prevMonth} style={{ padding: '6px' }}><ChevronLeft size={20} /></button>
+                        <button className="btn btn-secondary" onClick={nextMonth} style={{ padding: '6px' }}><ChevronRight size={20} /></button>
+                    </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '8px', textAlign: 'center', marginBottom: '8px' }}>
+                    {weekDays.map((day, i) => (
+                        <div key={day} style={{ fontWeight: 600, color: i === 0 ? 'var(--status-danger)' : i === 6 ? 'var(--point-primary)' : 'var(--text-secondary)', fontSize: '0.875rem', paddingBottom: '8px' }}>
+                            {day}
+                        </div>
+                    ))}
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '8px' }}>
+                    {calendarDays.map((date, idx) => {
+                        const events = getEventsForDate(date);
+                        const isToday = date && date.toDateString() === new Date().toDateString();
+                        const isSunday = date && date.getDay() === 0;
+                        const isSaturday = date && date.getDay() === 6;
+
+                        return (
+                            <div key={idx} style={{
+                                minHeight: '80px',
+                                padding: '8px',
+                                backgroundColor: date ? 'var(--bg-secondary)' : 'transparent',
+                                borderRadius: 'var(--radius-sm)',
+                                border: date ? (isToday ? '1px solid var(--point-primary)' : '1px solid var(--border-color)') : 'none',
+                                opacity: date ? 1 : 0
+                            }}>
+                                {date && (
+                                    <>
+                                        <div style={{
+                                            textAlign: 'right',
+                                            fontSize: '0.875rem',
+                                            marginBottom: '4px',
+                                            fontWeight: isToday ? 700 : 400,
+                                            color: isToday ? 'var(--point-primary)' : isSunday ? 'var(--status-danger)' : isSaturday ? 'var(--point-primary)' : 'var(--text-primary)'
+                                        }}>
+                                            {date.getDate()}
+                                        </div>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                            {events.map((e: any) => (
+                                                <div
+                                                    key={e.id}
+                                                    style={{
+                                                        fontSize: '0.7rem',
+                                                        padding: '4px',
+                                                        backgroundColor: e.type === '워크숍' ? 'rgba(37, 99, 235, 0.2)' : 'rgba(245, 158, 11, 0.2)',
+                                                        color: e.type === '워크숍' ? '#93c5fd' : '#fcd34d',
+                                                        borderRadius: '4px',
+                                                        whiteSpace: 'nowrap',
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        borderLeft: `2px solid ${e.type === '워크숍' ? 'var(--point-primary)' : 'var(--status-warning)'}`
+                                                    }}
+                                                    title={e.title}
+                                                >
+                                                    {e.title}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
