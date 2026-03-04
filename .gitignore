@@ -1,0 +1,6 @@
+node_modules/
+dist/
+dashboard/public/pdfs/*.pdf
+dashboard/public/pdf.worker.min.mjs
+.DS_Store
+*.log
